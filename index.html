@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no,
+      viewport-fit=cover">
+
+<meta name="theme-color" content="#0b0b0f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>TAKUEFLIX — Your world of stories</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#08080b;
+    --surface:#111116;
+    --surface2:#18181f;
+    --surface3:#22222b;
+    --text:#ffffff;
+    --muted:#9b9ba5;
+    --accent:#ff1744;
+    --accent2:#ff3d67;
+    --gold:#ffc107;
+    --green:#20d67b;
+    --border:rgba(255,255,255,.08);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    min-height:100vh;
+    background:var(--bg);
+    position:relative;
+    padding-bottom:80px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:62px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 16px;
+    background:rgba(8,8,11,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.logo span{
+    color:var(--accent);
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--surface2);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    font-size:19px;
+}
+
+.notification-dot{
+    position:absolute;
+    right:8px;
+    top:7px;
+    width:7px;
+    height:7px;
+    background:var(--accent);
+    border-radius:50%;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    min-height:440px;
+    overflow:hidden;
+}
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(to bottom,
+            rgba(0,0,0,.08),
+            rgba(8,8,11,.45) 48%,
+            var(--bg) 100%),
+        url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=80")
+        center/cover;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    padding:210px 20px 35px;
+}
+
+.hero-label{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(255,23,68,.9);
+    padding:6px 10px;
+    border-radius:5px;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.hero h1{
+    font-size:34px;
+    line-height:1;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#ddd;
+    line-height:1.5;
+    font-size:14px;
+    max-width:480px;
+}
+
+.hero-meta{
+    display:flex;
+    gap:10px;
+    margin:13px 0;
+    color:#ccc;
+    font-size:12px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:9px;
+}
+
+.primary-btn,
+.secondary-btn{
+    min-height:44px;
+    border-radius:8px;
+    padding:0 17px;
+    font-weight:bold;
+}
+
+.primary-btn{
+    background:white;
+    color:#000;
+}
+
+.secondary-btn{
+    background:rgba(255,255,255,.13);
+    color:white;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+    padding:8px 0 8px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 16px;
+}
+
+.section-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.section-more{
+    color:var(--accent);
+    font-size:12px;
+    font-weight:bold;
+}
+
+.horizontal{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:0 16px 12px;
+    scrollbar-width:none;
+}
+
+.horizontal::-webkit-scrollbar{
+    display:none;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    flex:0 0 145px;
+    width:145px;
+    position:relative;
+    cursor:pointer;
+}
+
+.poster{
+    width:145px;
+    height:205px;
+    object-fit:cover;
+    border-radius:9px;
+    background:var(--surface2);
+}
+
+.card-title{
+    font-size:13px;
+    font-weight:bold;
+    margin-top:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.card-meta{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+}
+
+.badge{
+    position:absolute;
+    left:7px;
+    top:7px;
+    background:var(--accent);
+    color:#fff;
+    padding:4px 6px;
+    border-radius:4px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.lock-badge{
+    position:absolute;
+    right:7px;
+    top:7px;
+    background:rgba(0,0,0,.75);
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.rating-badge{
+    position:absolute;
+    bottom:55px;
+    left:7px;
+    background:rgba(0,0,0,.78);
+    padding:4px 6px;
+    border-radius:4px;
+    font-size:10px;
+}
+
+.progress{
+    height:3px;
+    background:#333;
+    margin-top:5px;
+    border-radius:5px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:var(--accent);
+}
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    padding:0 16px 15px;
+}
+
+.grid .card{
+    width:100%;
+    min-width:0;
+}
+
+.grid .poster{
+    width:100%;
+    height:185px;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    z-index:200;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:650px;
+    height:70px;
+    padding-bottom:env(safe-area-inset-bottom);
+    background:rgba(13,13,18,.97);
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-around;
+}
+
+.nav-item{
+    flex:1;
+    color:#777780;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    font-size:10px;
+    position:relative;
+}
+
+.nav-item.active{
+    color:white;
+}
+
+.nav-icon{
+    font-size:20px;
+}
+
+.nav-item.active .nav-icon{
+    color:var(--accent);
+}
+
+/* =========================
+   OVERLAY / MODAL
+========================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:650px;
+    max-height:92vh;
+    overflow-y:auto;
+    background:#111116;
+    border-radius:18px 18px 0 0;
+    animation:slideUp .22s ease;
+}
+
+@keyframes slideUp{
+    from{transform:translateY(100%)}
+    to{transform:translateY(0)}
+}
+
+.modal-close{
+    position:absolute;
+    right:15px;
+    top:15px;
+    z-index:5;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:rgba(0,0,0,.7);
+    color:white;
+}
+
+.series-banner{
+    height:260px;
+    position:relative;
+}
+
+.series-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.series-banner:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent,#111116);
+}
+
+.series-info{
+    padding:0 18px 20px;
+    margin-top:-35px;
+    position:relative;
+    z-index:2;
+}
+
+.series-info h2{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.series-description{
+    color:#b9b9c2;
+    font-size:13px;
+    line-height:1.6;
+    margin:10px 0;
+}
+
+.tags{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin:10px 0;
+}
+
+.tag{
+    background:var(--surface3);
+    color:#bbb;
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:10px;
+}
+
+.action-row{
+    display:flex;
+    gap:8px;
+    margin:14px 0;
+}
+
+.action-row button{
+    flex:1;
+    min-height:43px;
+    border-radius:8px;
+    background:var(--surface3);
+    color:white;
+    font-weight:bold;
+}
+
+.action-row .active{
+    background:var(--accent);
+}
+
+/* =========================
+   EPISODES
+========================= */
+
+.episodes{
+    padding:0 18px 25px;
+}
+
+.episode{
+    display:flex;
+    gap:11px;
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+    cursor:pointer;
+}
+
+.ep-thumb{
+    width:112px;
+    height:65px;
+    border-radius:7px;
+    object-fit:cover;
+    flex-shrink:0;
+}
+
+.ep-info{
+    min-width:0;
+    flex:1;
+}
+
+.ep-title{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.ep-description{
+    color:#888;
+    font-size:10px;
+    margin-top:5px;
+    line-height:1.4;
+}
+
+.ep-number{
+    color:var(--accent);
+    font-size:10px;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.locked{
+    opacity:.65;
+}
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-container{
+    background:#000;
+    position:relative;
+}
+
+.video-container video{
+    width:100%;
+    aspect-ratio:16/9;
+    display:block;
+    background:#000;
+}
+
+.video-info{
+    padding:15px 17px;
+}
+
+.video-info h2{
+    font-size:18px;
+}
+
+.video-info p{
+    color:#999;
+    font-size:12px;
+    margin-top:7px;
+    line-height:1.5;
+}
+
+.next-countdown{
+    background:var(--surface2);
+    margin:10px 17px;
+    padding:13px;
+    border-radius:8px;
+    display:none;
+    text-align:center;
+}
+
+.next-countdown strong{
+    color:var(--accent);
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    padding:12px 16px;
+}
+
+.search-input{
+    width:100%;
+    height:45px;
+    border:1px solid var(--border);
+    background:var(--surface2);
+    color:white;
+    border-radius:9px;
+    padding:0 14px;
+    outline:none;
+}
+
+.search-input:focus{
+    border-color:var(--accent);
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile{
+    padding:25px 17px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.avatar{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#7d102a);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.profile-name{
+    font-size:19px;
+    font-weight:bold;
+}
+
+.profile-email{
+    color:#888;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.premium-card{
+    margin-top:20px;
+    background:linear-gradient(135deg,#241019,#15151b);
+    border:1px solid rgba(255,23,68,.25);
+    border-radius:12px;
+    padding:17px;
+}
+
+.premium-card h3{
+    margin-bottom:6px;
+}
+
+.premium-card p{
+    color:#aaa;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.settings-list{
+    margin-top:20px;
+}
+
+.setting{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 3px;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+}
+
+.setting span:last-child{
+    color:#888;
+}
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+.notification-list{
+    padding:10px 16px;
+}
+
+.notification{
+    display:flex;
+    gap:12px;
+    padding:14px 4px;
+    border-bottom:1px solid var(--border);
+}
+
+.notification-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--surface3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.notification-text{
+    flex:1;
+}
+
+.notification-text strong{
+    font-size:13px;
+}
+
+.notification-text p{
+    color:#888;
+    font-size:11px;
+    margin-top:4px;
+    line-height:1.4;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:88px;
+    transform:translateX(-50%) translateY(20px);
+    z-index:1000;
+    background:#fff;
+    color:#000;
+    padding:12px 17px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:bold;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    width:max-content;
+    max-width:90%;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   PREMIUM
+========================= */
+
+.plan{
+    margin:10px 17px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:17px;
+}
+
+.plan.featured{
+    border-color:var(--accent);
+}
+
+.plan-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.plan h3{
+    font-size:17px;
+}
+
+.price{
+    font-size:22px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.plan p{
+    color:#999;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.plan button{
+    width:100%;
+    height:43px;
+    margin-top:12px;
+    border-radius:8px;
+    background:var(--accent);
+    color:white;
+    font-weight:bold;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    padding:45px 20px;
+    text-align:center;
+    color:#777;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(min-width:600px){
+    .app{
+        box-shadow:0 0 50px rgba(0,0,0,.4);
+    }
+
+    .hero{
+        min-height:500px;
+    }
+
+    .hero-content{
+        padding-top:270px;
+    }
+}
+
+@media(max-width:350px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid .poster{
+        height:210px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">TAKUE<span>FLIX</span></div>
+
+    <div class="header-actions">
+        <button class="icon-btn" onclick="openSearch()">⌕</button>
+
+        <button class="icon-btn" onclick="openNotifications()">
+            ♡
+            <span class="notification-dot" id="notificationDot"></span>
+        </button>
+    </div>
+</header>
+
+
+<!-- MAIN -->
+<main id="mainContent"></main>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button class="nav-item active"
+            data-page="home"
+            onclick="navigate('home')">
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
+    </button>
+
+    <button class="nav-item"
+            data-page="discover"
+            onclick="navigate('discover')">
+        <span class="nav-icon">◉</span>
+        <span>Discover</span>
+    </button>
+
+    <button class="nav-item"
+            data-page="trending"
+            onclick="navigate('trending')">
+        <span class="nav-icon">🔥</span>
+        <span>Trending</span>
+    </button>
+
+    <button class="nav-item"
+            data-page="watchlist"
+            onclick="navigate('watchlist')">
+        <span class="nav-icon">♡</span>
+        <span>Watchlist</span>
+    </button>
+
+    <button class="nav-item"
+            data-page="profile"
+            onclick="navigate('profile')">
+        <span class="nav-icon">●</span>
+        <span>Profile</span>
+    </button>
+
+</nav>
+
+</div>
+
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+    <div class="modal" id="modal"></div>
+</div>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   TAKUEFLIX FRONT-END APPLICATION
+===================================================== */
+
+
+/* =====================================================
+   DEMO DATA
+===================================================== */
+
+const IMG = {
+    romance:
+    "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80",
+
+    ceo:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80",
+
+    revenge:
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80",
+
+    family:
+    "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=700&q=80",
+
+    mystery:
+    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80",
+
+    action:
+    "https://images.unsplash.com/photo-1533928298208-27ff66555d8d?auto=format&fit=crop&w=700&q=80",
+
+    drama:
+    "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=700&q=80",
+
+    historical:
+    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=80"
+};
+
+
+const VIDEO =
+"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+
+
+const series = [
+
+{
+    id:1,
+    title:"The CEO's Secret",
+    genre:"CEO",
+    genres:["CEO","Romance","Drama"],
+    year:2026,
+    rating:4.8,
+    ratings:1284,
+    views:98000,
+    description:
+    "A young woman discovers that the mysterious billionaire CEO she works for has been hiding a secret that could change both their lives.",
+    poster:IMG.ceo,
+    banner:IMG.ceo,
+    featured:true,
+    trending:true,
+    episodes:12
+},
+
+{
+    id:2,
+    title:"Broken Promises",
+    genre:"Revenge",
+    genres:["Revenge","Drama"],
+    year:2026,
+    rating:4.7,
+    ratings:932,
+    views:81000,
+    description:
+    "After losing everything because of a betrayal, Maya returns years later with one goal — to uncover the truth.",
+    poster:IMG.revenge,
+    banner:IMG.revenge,
+    trending:true,
+    episodes:15
+},
+
+{
+    id:3,
+    title:"Love After Midnight",
+    genre:"Romance",
+    genres:["Romance","Drama"],
+    year:2026,
+    rating:4.6,
+    ratings:743,
+    views:73000,
+    description:
+    "Two strangers meet by chance and discover that their lives are connected in ways neither expected.",
+    poster:IMG.romance,
+    banner:IMG.romance,
+    trending:true,
+    episodes:10
+},
+
+{
+    id:4,
+    title:"The Family Heir",
+    genre:"Family",
+    genres:["Family","Drama"],
+    year:2026,
+    rating:4.5,
+    ratings:542,
+    views:61000,
+    description:
+    "A family empire is placed in danger when an unexpected heir returns home.",
+    poster:IMG.family,
+    banner:IMG.family,
+    episodes:13
+},
+
+{
+    id:5,
+    title:"Hidden Truth",
+    genre:"Mystery",
+    genres:["Mystery","Thriller"],
+    year:2026,
+    rating:4.4,
+    ratings:438,
+    views:55000,
+    description:
+    "A journalist follows a mysterious clue that leads to a secret buried for decades.",
+    poster:IMG.mystery,
+    banner:IMG.mystery,
+    episodes:11
+},
+
+{
+    id:6,
+    title:"Dangerous Deal",
+    genre:"Action",
+    genres:["Action","Thriller"],
+    year:2026,
+    rating:4.3,
+    ratings:390,
+    views:47000,
+    description:
+    "One deal. One night. One chance to survive.",
+    poster:IMG.action,
+    banner:IMG.action,
+    episodes:14
+},
+
+{
+    id:7,
+    title:"Second Chance",
+    genre:"Drama",
+    genres:["Drama","Romance"],
+    year:2026,
+    rating:4.2,
+    ratings:321,
+    views:39000,
+    description:
+    "Sometimes life gives you another chance to fix what you thought was lost forever.",
+    poster:IMG.drama,
+    banner:IMG.drama,
+    episodes:10
+},
+
+{
+    id:8,
+    title:"Empire of Love",
+    genre:"Romance",
+    genres:["Romance","CEO"],
+    year:2026,
+    rating:4.1,
+    ratings:288,
+    views:34000,
+    description:
+    "Power, wealth and love collide when two powerful families become connected.",
+    poster:IMG.romance,
+    banner:IMG.romance,
+    episodes:12
+},
+
+{
+    id:9,
+    title:"The Last Letter",
+    genre:"Drama",
+    genres:["Drama","Mystery"],
+    year:2026,
+    rating:4.0,
+    ratings:204,
+    views:28000,
+    description:
+    "A letter arrives years too late and changes everything.",
+    poster:IMG.drama,
+    banner:IMG.drama,
+    episodes:9
+},
+
+{
+    id:10,
+    title:"Queen of Revenge",
+    genre:"Revenge",
+    genres:["Revenge","Action"],
+    year:2026,
+    rating:4.8,
+    ratings:1102,
+    views:102000,
+    description:
+    "She lost everything. Now she has returned to take it all back.",
+    poster:IMG.revenge,
+    banner:IMG.revenge,
+    trending:true,
+    episodes:16
+},
+
+{
+    id:11,
+    title:"Forever Yours",
+    genre:"Romance",
+    genres:["Romance"],
+    year:2026,
+    rating:3.9,
+    ratings:150,
+    views:21000,
+    description:
+    "A heartfelt story about love that refuses to disappea
